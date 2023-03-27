@@ -7,6 +7,7 @@ import "./Shop.css";
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  console.log(cart);
 
   useEffect(() => {
     fetch("/public/products.json")
@@ -16,8 +17,18 @@ const Shop = () => {
 
   useEffect(() => {
     const storedCart = getShoppingCart();
-    console.log(storedCart);
-  }, []);
+    let savedCart = [];
+    for (const id in storedCart) {
+      const addedProduct = products.find((p) => p.id === id);
+      if (addedProduct) {
+        const quantity = storedCart[id];
+        addedProduct.quantity = quantity;
+        savedCart.push = addedProduct;
+      }
+      // console.log("addProduct", addedProduct);
+    }
+    setCart(savedCart);
+  }, [products]);
 
   const handleAddtoCart = (product) => {
     const newCart = [...cart, product];

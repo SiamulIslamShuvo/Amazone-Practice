@@ -1,29 +1,29 @@
 import React from "react";
-import "./cart.css";
+import "./Cart.css";
 
-const cart = ({ cart }) => {
-  // const cart = props.cart; option 1
-  // const { cart } = props;
-  // console.log(cart);
-  let totalPrice = 0;
-  let totalShipping = 0;
-  for (const product of cart) {
-    totalPrice = totalPrice + product.price;
-    totalShipping = totalShipping + product.shipping;
-  }
-  const tax = (totalPrice * 7) / 100;
-  const gradTotal = totalPrice + totalShipping + tax;
+const Cart = ({ cart }) => {
+    let totalPrice = 0;
+    let totalShipping = 0;
+    let quantity = 0;
+    for (const product of cart) {
+        totalPrice = totalPrice + product.price * product.quantity;
+        totalShipping = totalShipping + product.shipping;
+        quantity = quantity + product.quantity;
+    }
+    const tax = (totalPrice * 7) / 100;
 
-  return (
-    <div className="cart">
-      <h3>Order SUmmary</h3>
-      <p>Selected Items: {cart.quantity}</p>
-      <p>Total Price: ${totalPrice} </p>
-      <p>Total Shipping: ${totalShipping} </p>
-      <p>Tax: ${tax.toFixed(2)} </p>
-      <h6>Grand Total:${gradTotal.toFixed(2)}</h6>
-    </div>
-  );
+    const grandTotal = totalPrice + totalShipping + tax;
+
+    return (
+        <div className="cart">
+            <h4>Order Summary</h4>
+            <p>Selected Items: {quantity}</p>
+            <p>Total Price: ${totalPrice}</p>
+            <p>Shipping: ${totalShipping}</p>
+            <p>Tax: ${tax.toFixed(2)}</p>
+            <h6>Grand Total: ${grandTotal.toFixed(2)} </h6>
+        </div>
+    );
 };
 
-export default cart;
+export default Cart;
